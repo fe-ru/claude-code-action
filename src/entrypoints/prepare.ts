@@ -91,6 +91,8 @@ async function run() {
       branchInfo.currentBranch,
     );
     core.setOutput("mcp_config", mcpConfig);
+    core.setOutput("github_token", githubToken);  // 追加
+
   } catch (error) {
     core.setFailed(`Prepare step failed with error: ${error}`);
     process.exit(1);
