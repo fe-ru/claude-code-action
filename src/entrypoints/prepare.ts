@@ -90,9 +90,28 @@ async function run() {
       context.repository.repo,
       branchInfo.currentBranch,
     );
+    
+    // 出力を設定
     core.setOutput("mcp_config", mcpConfig);
-    core.setOutput("github_token", githubToken);  // 追加
-
+    core.setOutput("github_token", githubToken);
+    
+    // ★ OAuth関連の出力を追加
+    // action.ymlで渡されたOAuth情報をそのまま次のステップに渡す
+    const useOAuth = process.env.USE_OAUTH === 'true';
+    if (useOAuth) {
+      // 環境変数から取得（action.ymlで設定されている）
+      const oauthToken = process.env.CLAUDE_ACCESS_TOKEN || "";
+      const refreshToken = process.env.CLAUDE_REFRESH_TOKEN || "";
+      const expiresAt = process.env.CLAUDE_EXPIRES_AT || "";
+      
+      // そのまま出力として設定
+      core.setOutput("oauth_access_token", oauthToken);
+      core.setOutput("oauth_refresh_token", refreshToken);
+      core.setOutput("oauth_expires_at", expiresAt);
+      
+      console.log("OAuth credentials passed through to next step");
+    }
+    
   } catch (error) {
     core.setFailed(`Prepare step failed with error: ${error}`);
     process.exit(1);
