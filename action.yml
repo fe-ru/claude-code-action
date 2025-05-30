@@ -106,10 +106,6 @@ runs:
         DIRECT_PROMPT: ${{ inputs.direct_prompt }}
         OVERRIDE_GITHUB_TOKEN: ${{ inputs.github_token }}
         GITHUB_RUN_ID: ${{ github.run_id }}
-        USE_OAUTH: ${{ inputs.use_oauth }}
-        CLAUDE_ACCESS_TOKEN: ${{ inputs.claude_access_token }}
-        CLAUDE_REFRESH_TOKEN: ${{ inputs.claude_refresh_token }}
-        CLAUDE_EXPIRES_AT: ${{ inputs.claude_expires_at }}
 
     - name: Run Claude Code
       id: claude-code
@@ -126,9 +122,9 @@ runs:
         use_vertex: ${{ inputs.use_vertex }}
         use_oauth: ${{ inputs.use_oauth }}
         anthropic_api_key: ${{ inputs.anthropic_api_key }}
-        claude_access_token: ${{ steps.prepare.outputs.oauth_access_token || inputs.claude_access_token }}
-        claude_refresh_token: ${{ steps.prepare.outputs.oauth_refresh_token || inputs.claude_refresh_token }}
-        claude_expires_at: ${{ steps.prepare.outputs.oauth_expires_at || inputs.claude_expires_at }}
+        claude_access_token: ${{ inputs.claude_access_token }}
+        claude_refresh_token: ${{ inputs.claude_refresh_token }}
+        claude_expires_at: ${{ inputs.claude_expires_at }}
       env:
         # Model configuration
         ANTHROPIC_MODEL: ${{ inputs.model || inputs.anthropic_model }}
